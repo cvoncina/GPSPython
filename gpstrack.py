@@ -41,7 +41,7 @@ TRX = -105.1621          #top right longitude
 TRY = 40.0868            #top right latitude
 BLX = -105.2898          #bottom left longitude
 BLY = 40.001             #bottom left latitude
-BAUDRATE = 9600
+BAUDRATE = 1200
 lat_input = 0            #latitude of home marker
 long_input = 0           #longitude of home marker
 count = 0
@@ -51,18 +51,19 @@ def position():
     global lat, long, lat_input, long_input, pos_x, pos_y, altitude
     global BLX, BLY, TRX, TRY,count
     f1 = open('nmea.txt', 'r') #open and read only
+    f2 = open('map.png', 'w'); #write info 
     for line in f1:
         if(line[0] == '\0'):
             f1.close()
             break
         elif(line[4] == 'G'): # $GPGGA
-            #print line
+            print line
             gpgga = nmea.GPGGA()
             gpgga.parse(line)
             lats = gpgga.latitude
             longs = gpgga.longitude
-            
-       
+            f2.write(lats)
+            f2.write(longs)
 position()
                         		
 	
